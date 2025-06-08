@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DramaPick</title>
+    <link rel="stylesheet" href="setting_modal.css">
+    <script src="setting_modal.js"></script>
+    <style>
+        /* 네이게이션 바 CSS */
+        #logo {
+            width: 150px;
+            margin-bottom: 10px;
+        }
+
+        header {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 0 40px 0;
+        }
+
+        nav.menu {
+            width: 100%;
+            margin: 0 0 48px 0;
+            background: none;
+            border: none;
+            box-shadow: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            position: relative;
+        }
+
+        nav.menu::after {
+            content: "";
+            display: block;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: -1px;
+            width: 100vw;
+            height: 1.5px;
+            background: #e0e0e0;
+            z-index: 1;
+        }
+
+        .menu-list {
+            display: flex;
+            gap: 60px;
+            align-items: center;
+            height: 64px;
+            padding: 0 48px;
+            min-width: 700px;
+            max-width: 1000px;
+            width: 100%;
+            background: none;
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+        .menu-list a {
+            color: #444;
+            text-decoration: none;
+            font-size: 1.15rem;
+            padding-bottom: 4px;
+            transition: color 0.2s;
+            display: inline-block;
+        }
+
+        .menu-list a.active {
+            color: #222;
+            font-weight: 700;
+            border-bottom: 4px solid #FDD835;
+        }
+
+        .menu-list a:hover {
+            color: #222;
+            font-weight: 700;
+            border-bottom: 4px solid #FDD835;
+        }
+
+        /* footer CSS */
+        .footer {
+            background-color: #f0f0f0;
+            padding: 20px;
+            font-size: 12px;
+            color: #666;
+            margin-top: 50px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .footer-content {
+            max-width: 1040px;
+            margin: 0 auto;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        .footer p {
+            margin: 5px 0;
+            line-height: 1.4;
+        }
+
+        /* 반응형 푸터 스타일 */
+        @media (max-width: 600px) {
+            .footer {
+                padding: 15px;
+                font-size: 11px;
+                margin-top: 40px;
+            }
+
+            .footer-content {
+                max-width: 95vw;
+                padding: 0 10px;
+            }
+
+            .footer p {
+                margin: 4px 0;
+            }
+        }
+
+        @media (max-width: 1000px) {
+
+            .menu-list {
+                min-width: 0;
+                max-width: 100vw;
+                padding: 0 8px;
+                gap: 24px;
+            }
+        }
+
+        main {
+            width: 1000px;
+            margin: 0 auto;
+        }
+
+        #headline {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        #profileContainer {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 15px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+
+        .profiles {
+            width: 90px;
+            height: 90px;
+            background-color: lightgray;
+            border-radius: 50%;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0 auto;
+        }
+
+        .profiles img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            display: block;
+        }
+
+        .profiles::after {
+            bottom: -10px;
+            content: "";
+            position: absolute;
+            border-bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 5px;
+            background-color: #FDD835;
+            transition: width 0.3s ease;
+        }
+
+        .profiles:hover::after {
+            width: 100%;
+        }
+
+        .profiles.selected::after {
+            width: 100%;
+        }
+
+        .lists {
+            border-bottom: 1px solid lightgray;
+            display: flex;
+            flex-direction: row;
+            margin-bottom: 10px;
+            gap: 30px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+        }
+
+        .lists:hover {
+            background-color: #f9f9f9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .lists.expanded {
+            padding: 30px 15px;
+            transform: scaleY(1.5);
+            background-color: #f5f5f5;
+            border: 2px solid #FDD835;
+            z-index: 10;
+            position: relative;
+        }
+
+        .thumbnail {
+            width: 100px;
+            height: 100px;
+            background-color: lightgray;
+        }
+
+        .text {
+            flex: 1;
+        }
+
+        .text .drama-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .text .drama-description {
+            font-size: 0.95rem;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="menu">
+            <a href="index.html"><img id="logo" src="img/logo_white.jpg"></a>
+            <div class="menu-list">
+                <a href="romance.html">드라마</a>
+                <a href="#" class="active">주인장 추천</a>
+                <a href="introduce.html">조원소개</a>
+                <a href="notice.html">공지사항</a>
+                <a href="come_route.html" >찾아오는 길</a>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div id="headline">
+            <h1>주인장 추천 리스트</h1>
+            <p>조금은 사적인, 그래서 더 특별한 드라마 추천 글</p>
+        </div>
+        <div id="profileContainer">
+            <div class="profiles selected" data-profile="1">
+                <img src="img/profile1.jpg" alt="프로필 1">
+            </div>
+            <div class="profiles" data-profile="2">
+                <img src="img/profile2.jpg" alt="프로필 2">
+            </div>
+            <div class="profiles" data-profile="3">
+                <img src="img/profile3.jpg" alt="프로필 3">
+            </div>
+            <div class="profiles" data-profile="4">
+                <img src="img/profile4.jpg" alt="프로필 4">
+            </div>
+            <div class="profiles" data-profile="5">
+                <img src="img/profile5.jpg" alt="프로필 5">
+            </div>
+            <div class="profiles" data-profile="6">
+                <img src="img/profile6.jpg" alt="프로필 6">
+            </div>
+            <div class="profiles" data-profile="7">
+                <img src="img/profile7.jpg" alt="프로필 7">
+            </div>
+        </div>
+        <div id="dramaListContainer">
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="footer-content">
+            <p>서비스 이용약관 | 개인정보 처리방침 | 연락 정보</p>
+            <p>고객센터 | (02)300-1000,1114 FAX (02)304-4832</p>
+            <p>콜고 문의 | (02)300-1000,1114 FAX (02)304-4832</p>
+            <p>제휴 및 대외 협력 | https://www.mjc.ac.kr/mjcindex.do | 사업장 | 우)03656 서울특별시 서대문구 거북로 134(남가좌동) 서대문구 홍은 2동 356-1)
+            </p>
+        </div>
+    </footer>
+    <script>
+        // 프로필별 드라마 데이터
+        const dramaData = {
+            1: [
+                { title: "더 글로리", description: "학교폭력 피해자의 치밀하고 완벽한 복수 이야기" },
+                { title: "괴물", description: "연쇄살인사건을 둘러싼 형사와 검사의 추리 스릴러" },
+                { title: "경이로운 소문", description: "악귀를 잡는 특별한 능력을 가진 청년들의 액션 판타지" },
+                { title: "도깨비", description: "불멸의 도깨비와 도깨비 신부의 운명적 로맨스" },
+                { title: "사랑의 불시착", description: "패러글라이딩 사고로 북한에 불시착한 재벌 상속녀의 로맨스" },
+                { title: "이번 생은 처음이라", description: "계약결혼으로 시작된 두 남녀의 현실적 로맨스" },
+                { title: "그 해 우리는", description: "다큐멘터리 촬영으로 재회한 연인들의 청춘 로맨스" }
+            ],
+            2: [
+                { title: "보이스", description: "황금시간대 112신고센터 팀원들의 범죄 수사 스릴러" },
+                { title: "미씽", description: "실종된 사람들을 찾는 특별수사대의 추적 드라마" },
+                { title: "나인 퍼즐", description: "9개의 퍼즐 조각으로 이어지는 연쇄살인 사건 수사" },
+                { title: "이토록 친밀한 배신자", description: "가족 내부의 어두운 비밀과 배신을 다룬 스릴러" },
+                { title: "비밀의 숲", description: "감정을 잃은 검사와 열혈 형사의 부패 척결 수사극" },
+                { title: "굿 파트너", description: "이혼 전문 변호사들의 현실적인 법정 드라마" },
+                { title: "악마판사", description: "국민 참여 재판으로 악을 심판하는 판사의 정의 실현기" }
+            ],
+            3: [
+                { title: "푸른 바다의 전설", description: "인어와 사기꾼의 전생과 현생을 넘나드는 판타지 로맨스" },
+                { title: "마스크걸", description: "외모 콤플렉스를 가진 여성의 복수와 변신 스릴러" },
+                { title: "눈이 부시게", description: "70대에서 20대로 돌아간 여성의 인생 재설계 이야기" },
+                { title: "미스터 선샤인", description: "일제강점기 조선의 마지막 자존심을 지킨 저항 로맨스" },
+                { title: "도깨비", description: "불멸의 도깨비와 저승사자, 인간들의 운명적 만남" },
+                { title: "눈물의 여왕", description: "백화점 상속녀와 변호사 남편의 위기와 사랑 이야기" },
+                { title: "선재 업고 튀어", description: "시간을 되돌려 첫사랑을 구하려는 남자의 타임리프 로맨스" }
+            ],
+            4: [
+                { title: "기생수", description: "외계 기생충과 공생하게 된 고등학생의 생존 액션" },
+                { title: "살인장난감", description: "아동 대상 연쇄살인마를 쫓는 수사관들의 추적극" },
+                { title: "피라미드 게임", description: "학교 계급제 게임에 맞서는 전학생의 반격 스릴러" },
+                { title: "스위트홈", description: "괴물이 된 인간들과 생존자들의 아파트 서바이벌" },
+                { title: "오징어 게임 2", description: "456번 플레이어의 복귀와 새로운 게임의 시작" },
+                { title: "눈물의 여왕", description: "3년째 위기의 부부가 다시 사랑을 찾아가는 이야기" },
+                { title: "선재 업고 튀어", description: "운명을 바꾸기 위해 시간을 되돌리는 청춘 로맨스" }
+            ],
+            5: [
+                { title: "나의 해방일지", description: "각자의 해방을 꿈꾸는 삼남매와 신비한 남자의 이야기" },
+                { title: "시그널", description: "과거와 현재를 잇는 무전기로 미제사건을 해결하는 수사극" },
+                { title: "미스터 선샤인", description: "조선 말기 격동의 시대를 배경으로 한 애국 로맨스" },
+                { title: "이상한 변호사 우영우", description: "자폐 스펙트럼 장애를 가진 천재 변호사의 성장 드라마" },
+                { title: "악마판사", description: "국민이 직접 심판하는 법정에서 악을 응징하는 판사" },
+                { title: "지금 우리 학교는", description: "좀비 바이러스가 창궐한 학교에서의 학생들 생존기" },
+                { title: "사랑의 불시착", description: "분단의 벽을 넘은 남북한 사랑 이야기" }
+            ],
+            6: [
+                { title: "태양의 후예", description: "평화유지군 대위와 국경없는의사회 의사의 국제적 로맨스" },
+                { title: "스터디그룹", description: "입시 경쟁 속에서 우정과 사랑을 찾아가는 청춘 드라마" },
+                { title: "약한영웅", description: "학교폭력에 맞서는 왕따 학생의 반격과 성장 이야기" },
+                { title: "슬기로운 의사생활", description: "20년 친구인 의사들의 일상과 우정, 사랑을 그린 힐링 드라마" },
+                { title: "중증외상센터", description: "생사를 오가는 응급실에서 환자를 구하는 의료진들의 이야기" },
+                { title: "지금 우리 학교는", description: "좀비 아포칼립스 속에서 살아남으려는 고등학생들의 사투" },
+                { title: "스위트홈 3", description: "괴물과의 최종 전쟁, 인간성 회복을 위한 마지막 선택" }
+            ],
+            7: [
+                { title: "응답하라 1988", description: "1988년 쌍문동 골목길 다섯 가족의 따뜻한 이웃사촌 이야기" },
+                { title: "부부의 세계", description: "남편의 불륜으로 파탄난 완벽했던 부부의 치열한 복수극" },
+                { title: "나의 아저씨", description: "삶에 지친 중년 남성과 절망적인 젊은 여성의 치유 드라마" },
+                { title: "비밀의 숲", description: "감정을 잃은 검사가 파헤치는 검찰 내부의 거대한 비리" },
+                { title: "하얀거탑", description: "대학병원을 배경으로 한 권력과 의학윤리의 갈등 드라마" },
+                { title: "시그널", description: "15년 시차를 뛰어넘는 무전기로 연결된 형사들의 미제사건 수사" },
+                { title: "괴물", description: "연쇄살인 사건 수사 과정에서 드러나는 인간의 이중성과 진실" }
+            ]
+        };
+
+
+        let profiles = document.querySelectorAll('.profiles');
+        console.log("profiles: ", profiles);
+        const dramaContainer = document.querySelector('#dramaListContainer');
+        let profileNumber = 1;
+
+
+        // 드라마 리스트 업데이트 함수
+        function updateDramaList(profileNumber) {
+            const dramas = dramaData[profileNumber];
+            console.log("dramas: ", dramas);
+            let html = '';
+
+
+            dramas.forEach((drama, index) => {
+                const dramaIndex = index + 1;
+                const imagePath = `img/recommend/${profileNumber}/${dramaIndex}.jpg`;
+
+                html += `
+                <div class="lists" data-drama="${index}" style="${index === 0 ? 'border-top: 1px solid lightgray;' : ''}">
+                    <div class="thumbnail">
+                        <img src="${imagePath}" alt="${drama.title}" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="text">
+                        <span class="drama-title">${drama.title}</span>
+                        <span class="drama-description">${drama.description}</span>
+                    </div>
+                </div>
+                            `;
+            });
+            console.log("생성된 HTML: ", html); // 이 줄 추가
+            dramaContainer.innerHTML = html;
+            console.log("설정 후 dramaContainer.innerHTML: ", dramaContainer.innerHTML); // 이 줄 추가
+
+            // 드라마 항목 클릭 이벤트 추가
+            const dramaItems = dramaContainer.querySelectorAll('.lists');
+            // dramaItems.forEach(item => {
+            //     item.addEventListener('click', function () {
+            //         dramaItems.forEach(other => {
+            //             if (other !== this) {
+            //                 other.classList.remove('expanded');
+            //             }
+            //         });
+            //         this.classList.toggle('expanded');
+            //     });
+            // });
+        }
+        document.addEventListener('click', function (e) {
+            // 클릭된 요소가 프로필 이미지인지 확인
+            if (e.target.matches('.profiles img')) {
+                console.log('프로필 클릭됨!');
+
+                // 이미지의 부모인 프로필 div 찾기
+                const profile = e.target.closest('.profiles');
+
+                // 모든 프로필에서 selected 클래스 제거
+                profiles.forEach(p => p.classList.remove('selected'));
+
+                // 클릭된 프로필에 selected 클래스 추가
+                profile.classList.add('selected');
+
+                // 선택된 프로필 정보 가져오기
+                const selectedProfileNumber = parseInt(profile.getAttribute('data-profile'));
+                console.log('선택된 프로필 번호:', selectedProfileNumber);
+
+                // 해당 프로필의 드라마 리스트 표시
+                updateDramaList(selectedProfileNumber);
+            }
+        });
+
+        updateDramaList(profileNumber);
+    </script>
+</body>
+
+</html>

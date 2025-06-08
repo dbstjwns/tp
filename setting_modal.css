@@ -1,0 +1,376 @@
+.setting_modal {
+    position: fixed;
+    right: 10%;
+    bottom: 10%;
+}
+
+#modal_father {
+    width: 70px;
+    height: 140px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding: 5px 0;
+    justify-content: space-evenly;
+}
+
+#move_up_btn,
+#setting_btn {
+    width: 52px;
+    height: 52px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+    margin: 0 auto;
+    background: white;
+    cursor: pointer;
+}
+
+#modal_father svg {
+    width: 30px;
+    height: 30px;
+}
+
+#move_up_btn:hover,
+#setting_btn:hover {
+    background: #f0f0f0;
+}
+
+#modal_son {
+    display: none;
+    position: fixed;
+    right: 15%;
+    bottom: 15%;
+    width: 200px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    z-index: 1000;
+}
+
+.modal-content {
+    width: 100%;
+}
+
+.setting-section {
+    margin-bottom: 24px;
+}
+
+.setting-section:last-child {
+    margin-bottom: 0;
+}
+
+.setting-section h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #333;
+}
+
+.option-grid {
+    display: flex;
+    gap: 8px;
+    justify-content: space-between;
+}
+
+.option-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+
+.option-item:hover {
+    background-color: #f5f5f5;
+}
+
+.option-item.active {
+    background-color: #e3f2fd;
+}
+
+.option-box {
+    width: 40px;
+    height: 40px;
+    background-color: #d0d0d0;
+    border-radius: 6px;
+    margin-bottom: 6px;
+}
+
+.option-item span {
+    font-size: 12px;
+    color: #666;
+}
+
+.option-item.active span {
+    color: #1976d2;
+    font-weight: 500;
+}
+
+/* 텍스트 크기 프리뷰 */
+.text-size-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f8f9fa;
+}
+
+.text-preview {
+    font-weight: 500;
+    color: #333;
+}
+
+.small-text {
+    font-size: 10px;
+}
+
+.medium-text {
+    font-size: 14px;
+}
+
+.large-text {
+    font-size: 18px;
+}
+
+/* 테마 프리뷰 */
+.theme-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+}
+
+.theme-lines {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    width: 24px;
+}
+
+.line {
+    height: 2px;
+    border-radius: 1px;
+}
+
+.line.short {
+    width: 60%;
+}
+
+.light-preview {
+    background-color: #ffffff;
+}
+
+.light-preview .line {
+    background-color: #333333;
+}
+
+/* 다크 모드 프리뷰 */
+.dark-preview {
+    background-color: #2d2d2d;
+}
+
+.dark-preview .line {
+    background-color: #64b5f6;
+}
+
+/* 폰트 크기 변경 - 범용적으로 모든 페이지에 적용 */
+.text-small {
+    font-size: 14px !important;
+}
+
+.text-small h1,
+.text-small h2,
+.text-small h3,
+.text-small h4,
+.text-small h5,
+.text-small h6 {
+    font-size: 1.2em !important;
+}
+
+.text-small p,
+.text-small span,
+.text-small div:not(.setting_modal *),
+.text-small a:not(.setting_modal *) {
+    font-size: 0.85em !important;
+}
+
+.text-small .menu-list a {
+    font-size: 0.9rem !important;
+}
+
+.text-medium {
+    font-size: 16px !important;
+}
+
+.text-medium h1,
+.text-medium h2,
+.text-medium h3,
+.text-medium h4,
+.text-medium h5,
+.text-medium h6 {
+    font-size: 1.5em !important;
+}
+
+.text-medium p,
+.text-medium span,
+.text-medium div:not(.setting_modal *),
+.text-medium a:not(.setting_modal *) {
+    font-size: 1em !important;
+}
+
+.text-medium .menu-list a {
+    font-size: 1.15rem !important;
+}
+
+.text-large {
+    font-size: 20px !important;
+}
+
+.text-large h1,
+.text-large h2,
+.text-large h3,
+.text-large h4,
+.text-large h5,
+.text-large h6 {
+    font-size: 1.8em !important;
+}
+
+.text-large p,
+.text-large span,
+.text-large div:not(.setting_modal *),
+.text-large a:not(.setting_modal *) {
+    font-size: 1.2em !important;
+}
+
+.text-large .menu-list a {
+    font-size: 1.4rem !important;
+}
+
+/* 모달창 텍스트는 크기 고정 */
+.setting_modal,
+.setting_modal * {
+    font-size: initial !important;
+}
+
+.setting_modal h3 {
+    font-size: 14px !important;
+}
+
+.setting_modal .option-item span {
+    font-size: 12px !important;
+}
+
+.theme-dark {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+}
+
+.theme-dark .map-box,
+.theme-dark .address-box,
+.theme-dark #modal_father {
+    background-color: #2d2d2d !important;
+    color: #ffffff !important;
+}
+
+/* 다크 모드 네비게이션 스타일 */
+.theme-dark nav.menu::after {
+    background: #555;
+}
+
+.theme-dark .menu-list a {
+    color: #ffffff !important;
+}
+
+.theme-dark .menu-list a:hover {
+    color: #ffffff !important;
+    border-bottom: 4px solid #FDD835;
+}
+
+.theme-dark .menu-list a.active {
+    color: #ffffff !important;
+    border-bottom: 4px solid #FDD835;
+}
+
+/* 톱니바퀴 아이콘은 검은색 유지 */
+.theme-dark #setting_btn svg,
+#move_up_btn svg {
+    stroke: #000000 !important;
+}
+
+/* 공지사항 페이지 다크모드 스타일 */
+.theme-dark .content {
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
+}
+
+.theme-dark .page-title {
+    color: #ffffff !important;
+}
+
+.theme-dark .notice-table {
+    background-color: #2d2d2d !important;
+}
+
+.theme-dark .notice-table tr {
+    border-bottom: 1px solid #444 !important;
+}
+
+.theme-dark .notice-table td {
+    color: #ffffff !important;
+}
+
+.theme-dark .notice-table td:last-child {
+    color: #cccccc !important;
+}
+
+.theme-dark .notice-table a {
+    color: #ffffff !important;
+}
+
+.theme-dark .notice-table a:hover {
+    color: #FDD835 !important;
+    text-decoration: underline;
+}
+
+/* 공지사항 모달 다크모드 스타일 */
+.theme-dark .notice-modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.7) !important;
+}
+
+.theme-dark .notice-modal {
+    background-color: #2d2d2d !important;
+    color: #ffffff !important;
+}
+
+.theme-dark .notice-close {
+    color: #ffffff !important;
+}
+
+.theme-dark .modal-title {
+    color: #ffffff !important;
+}
+
+.theme-dark .drama-item {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.theme-dark .list-title {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3) !important;
+    color: #ffffff !important;
+}
+.theme-dark .footer {
+  background-color: #1a1a1a; /* 더 어두운 배경 */
+  color: #ffffff;
+}
+
+.theme-dark .footer p {
+  color: #ffffff;
+}

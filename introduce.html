@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <title>DramaPick</title>
+  <link rel="stylesheet" href="setting_modal.css">
+  <script src="setting_modal.js"></script>
+  <style>
+    /* 네이게이션 바 CSS */
+    #logo {
+      width: 150px;
+      margin-bottom: 10px;
+    }
+
+    header {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 0 40px 0;
+    }
+
+    nav.menu {
+      width: 100%;
+      margin: 0 0 48px 0;
+      background: none;
+      border: none;
+      box-shadow: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      position: relative;
+    }
+
+    nav.menu::after {
+      content: "";
+      display: block;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: -1px;
+      width: 100vw;
+      height: 1.5px;
+      background: #e0e0e0;
+      z-index: 1;
+    }
+
+    .menu-list {
+      display: flex;
+      gap: 60px;
+      align-items: center;
+      height: 64px;
+      padding: 0 48px;
+      min-width: 700px;
+      max-width: 1000px;
+      width: 100%;
+      background: none;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    .menu-list a {
+      color: #444;
+      text-decoration: none;
+      font-size: 1.15rem;
+      padding-bottom: 4px;
+      transition: color 0.2s;
+      display: inline-block;
+    }
+
+    .menu-list a.active {
+      color: #222;
+      font-weight: 700;
+      border-bottom: 4px solid #FDD835;
+    }
+
+    .menu-list a:hover {
+      color: #222;
+      font-weight: 700;
+      border-bottom: 4px solid #FDD835;
+    }
+
+    /* footer CSS */
+    .footer {
+      background-color: #f0f0f0;
+      padding: 20px;
+      font-size: 12px;
+      color: #666;
+      margin-top: 50px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .footer-content {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 0 20px;
+      box-sizing: border-box;
+    }
+
+    .footer p {
+      margin: 5px 0;
+      line-height: 1.4;
+    }
+
+    /* 반응형 푸터 스타일 */
+    @media (max-width: 600px) {
+      .footer {
+        padding: 15px;
+        font-size: 11px;
+        margin-top: 40px;
+      }
+
+      .footer-content {
+        max-width: 95vw;
+        padding: 0 10px;
+      }
+
+      .footer p {
+        margin: 4px 0;
+      }
+    }
+
+    @media (max-width: 1000px) {
+
+      .menu-list {
+        min-width: 0;
+        max-width: 100vw;
+        padding: 0 8px;
+        gap: 24px;
+      }
+    }
+
+
+
+    /* 조원소개 카드 영역 */
+    .members-area {
+      background: none;
+      border-radius: 0;
+      padding: 56px 0 56px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: none;
+    }
+
+    /* 조장 박스 */
+    .member-card.leader {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 12px 16px 30px 0 rgba(60, 60, 60, 0.16);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 38px 32px 32px 32px;
+      width: 360px;
+      min-height: 340px;
+      margin-bottom: 56px;
+      box-sizing: border-box;
+      transition: box-shadow 0.2s;
+    }
+
+    /* 조원 그리드 */
+    .members-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      column-gap: 120px;
+      row-gap: 56px;
+      width: 800px;
+      max-width: 96vw;
+      justify-content: center;
+    }
+
+    .member-card {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 12px 16px 30px 0 rgba(60, 60, 60, 0.16);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 38px 32px 32px 32px;
+      width: 360px;
+      min-height: 340px;
+      box-sizing: border-box;
+      transition: box-shadow 0.2s;
+    }
+
+    .profile-img {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      margin-bottom: 28px;
+      background: #fafafa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .profile-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .member-name {
+      font-size: 1.18rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .member-role {
+      font-size: 0.97rem;
+      color: #555;
+      margin-bottom: 8px;
+    }
+
+    .member-desc {
+      font-size: 0.95rem;
+      color: #888;
+    }
+
+    @media (max-width: 1200px) {
+      .members-grid {
+        width: 96vw;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .members-grid {
+        grid-template-columns: 1fr;
+        column-gap: 0;
+        row-gap: 28px;
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .member-card,
+      .member-card.leader {
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+      }
+    }
+  </style>
+  <script type="text/javascript" nonce="XOJ0BVE+zr3qdJZKBBAaLFbFzesxhK/xP1QmLnOdycs="
+    src="//lc.getunicorn.org?type=base-script&amp;request-id=328"></script>
+</head>
+
+<body>
+  <header>
+    <nav class="menu">
+      <a href="index.html"><img id="logo" src="img/logo_white.jpg"></a>
+      <div class="menu-list">
+        <a href="romance.html">드라마</a>
+        <a href="admin_recommend.html">주인장 추천</a>
+        <a href="#" class="active">조원소개</a>
+        <a href="notice.html">공지사항</a>
+        <a href="come_route.html">찾아오는 길</a>
+      </div>
+    </nav>
+  </header>
+  <div class="container">
+    <section class="members-area">
+      <!-- 조장(맨 위) -->
+      <div class="member-card leader">
+        <div class="profile-img">
+          <img src="img/profile6.jpg" alt="윤서준 프로필">
+        </div>
+        <div class="member-name">윤서준</div>
+        <div class="member-role">팀장 | 전체/스크립트 기능 개발 담당</div>
+        <div class="member-desc">사이트의 메인 주인장인 윤서준이라고 합니다.</div>
+      </div>
+      <!-- 나머지 조원들 2열 3줄 그리드 -->
+      <div class="members-grid">
+        <div class="member-card">
+          <div class="profile-img">
+            <img src="img/profile5.jpg" alt="송유찬 프로필">
+          </div>
+          <div class="member-name">송유찬</div>
+          <div class="member-role">조원 | 서비스/스크립트 기능 개발 담당</div>
+          <div class="member-desc">유찬이 바보</div>
+        </div>
+        <div class="member-card">
+          <div class="profile-img">
+            <img src="img/profile4.jpg" alt="서윤채 프로필">
+          </div>
+          <div class="member-name">서윤채</div>
+          <div class="member-role">조원 | 서비스/스크립트 기능 개발 담당</div>
+          <div class="member-desc">윤채언니 바보</div>
+        </div>
+        <div class="member-card">
+          <div class="profile-img">
+            <img src="img/profile1.jpg" alt="조민지 프로필">
+          </div>
+          <div class="member-name">조민지</div>
+          <div class="member-role">조원 | 서비스/스크립트 기능 개발 담당</div>
+          <div class="member-desc">소개: 민지임ㅎㅎ</div>
+        </div>
+        <div class="member-card">
+          <div class="profile-img">
+            <img src="img/profile7.jpg" alt="이우강 프로필">
+          </div>
+          <div class="member-name">이우강</div>
+          <div class="member-role">조원 | 서비스/스크립트 기능 개발 담당</div>
+          <div class="member-desc">화이팅</div>
+        </div>
+        <div class="member-card">
+          <div class="profile-img">
+            <img src="img/profile2.jpg" alt="박다은 프로필">
+          </div>
+          <div class="member-name">박다은</div>
+          <div class="member-role">조원 | 서비스/스크립트 기능 개발 담당</div>
+          <div class="member-desc">홈페이지 디자인/영상담당<br>공지사항 코드 짰습니다.</div>
+        </div>
+        <div class="member-card">
+          <div class="profile-img">
+            <img src="img/profile3.jpg" alt="박소연 프로필">
+          </div>
+          <div class="member-name">박소연</div>
+          <div class="member-role">조원 | 서비스/스크립트 기능 개발 담당</div>
+          <div class="member-desc">소연이 바보</div>
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+<footer class="footer">
+  <div class="footer-content">
+    <p>서비스 이용약관 | 개인정보 처리방침 | 연락 정보</p>
+    <p>고객센터 | (02)300-1000,1114 FAX (02)304-4832</p>
+    <p>콜고 문의 | (02)300-1000,1114 FAX (02)304-4832</p>
+    <p>제휴 및 대외 협력 | https://www.mjc.ac.kr/mjcindex.do | 사업장 | 우)03656 서울특별시 서대문구 거북로 134(남가좌동) 서대문구 홍은 2동 356-1)
+    </p>
+  </div>
+</footer>
+
+</html>

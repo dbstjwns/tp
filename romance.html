@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <title>DramaPick</title>  
+  <link rel="stylesheet" href="setting_modal.css">
+  <script src="setting_modal.js"></script>
+  <style>
+    #logo {
+      width: 150px;
+      margin-bottom: 10px;
+    }
+
+    header {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    nav.menu {
+      width: 100%;
+      background: none;
+      border: none;
+      box-shadow: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      position: relative;
+    }
+
+    .drama-title {
+      font-weight: bold;
+      font-size: 16px;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .drama-description {
+      opacity: 0.8;
+      font-size: 13px;
+    }
+
+    nav.menu::after {
+      content: "";
+      display: block;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: -1px;
+      width: 100vw;
+      height: 1.5px;
+      background: #e0e0e0;
+      z-index: 1;
+    }
+
+    .menu-list {
+      display: flex;
+      gap: 60px;
+      align-items: center;
+      height: 64px;
+      padding: 0 48px;
+      min-width: 700px;
+      max-width: 1000px;
+      width: 100%;
+      background: none;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    .menu-list a {
+      color: #444;
+      text-decoration: none;
+      font-size: 1.15rem;
+      padding-bottom: 4px;
+      transition: color 0.2s;
+      display: inline-block;
+    }
+
+    .menu-list a.active {
+      color: #222;
+      font-weight: 700;
+      border-bottom: 4px solid #FDD835;
+    }
+
+    .menu-list a:hover {
+      color: #222;
+      font-weight: 700;
+      border-bottom: 4px solid #FDD835;
+    }
+
+    /* footer CSS */
+    .footer {
+      background-color: #f0f0f0;
+      padding: 20px;
+      font-size: 12px;
+      color: #666;
+      margin-top: 50px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .footer-content {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 0 20px;
+      box-sizing: border-box;
+    }
+
+    .footer p {
+      margin: 5px 0;
+      line-height: 1.4;
+    }
+
+    /* 반응형 푸터 스타일 */
+    @media (max-width: 600px) {
+      .footer {
+        padding: 15px;
+        font-size: 11px;
+        margin-top: 40px;
+      }
+
+      .footer-content {
+        max-width: 95vw;
+        padding: 0 10px;
+      }
+
+      .footer p {
+        margin: 4px 0;
+      }
+    }
+
+    #banner {
+      width: 1200px;
+      height: 400px;
+      margin: 0 auto;
+    }
+
+    .genre-banner-box {
+      position: relative;
+      width: 100%;
+    }
+
+    .genre-banner-box img {
+      width: 100%;
+      height: 350px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .genre-banner-text {
+      position: absolute;
+      bottom: 20px;
+      left: 46%;
+      transform: translateX(-500px);
+      color: black;
+      width: 960px;
+      margin-left: 20px;
+    }
+
+    .banner-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-60%);
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .banner-arrow.left {
+      left: 10%;
+    }
+
+    .banner-arrow.right {
+      right: 10%;
+    }
+
+    .banner-arrow img {
+      width: 45px;
+      height: 45px;
+      object-fit: contain;
+    }
+
+    .intro {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      max-width: 1000px;
+      margin: 30px auto 0 auto;
+      padding: 0 20px;
+      position: relative;
+    }
+
+    .intro-text {
+      text-align: center;
+    }
+
+    .intro-text p {
+      font-size: 12px;
+      margin-top: 4px;
+    }
+
+    .intro p {
+      font-size: 12px;
+      margin-top: 4px;
+    }
+
+    .nav-arrow.left {
+      left: 1000px;
+    }
+
+    .nav-arrow.right {
+      right: 0;
+    }
+
+    .nav-arrow:hover {
+      opacity: 0.7;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: space-around;
+      padding: 16px 0;
+      margin: 0;
+    }
+
+    nav li a {
+      color: rgb(64, 62, 62);
+      text-decoration: none;
+    }
+
+    .line hr,
+    .line2 hr {
+      border: none;
+      height: 0.3px;
+      background-color: darkgray;
+    }
+
+    .select-drama-part {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      align-items: center;
+      gap: 40px;
+      padding: 40px 10%;
+      position: relative;
+      width: 1000px;
+      margin: 0 auto;
+    }
+
+    .select-drama {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      position: relative;
+      transform: translateX(-20px);
+    }
+
+    .select-drama article {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      border: 2px solid transparent;
+      border-radius: 8px;
+      transition: border-color 0.3s ease;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .select-drama article:hover {
+      border-color: #FDD835;
+    }
+
+    .select-drama article.active {
+      border-color: #FDD835;
+    }
+
+    .select-drama article p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.4;
+      flex: 1;
+    }
+
+    .select-drama img {
+      width: 100px;
+      height: 65px;
+      background-color: rgb(202, 200, 200);
+      object-fit: cover;
+      border-radius: 6px;
+      flex-shrink: 0;
+    }
+
+    .arrow-up,
+    .arrow-down {
+      position: absolute;
+      left: 120px;
+      width: 0;
+      height: 0;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      cursor: pointer;
+    }
+
+    .arrow-up {
+      top: 20px;
+      border-bottom: 10px solid gray;
+    }
+
+    .arrow-down {
+      bottom: 20px;
+      border-top: 10px solid gray;
+    }
+
+    .main-select-drama {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 20px;
+      margin-left: 70px;
+      transform: translateX(20px);
+    }
+
+    .main-select-drama img {
+      width: 320px;
+      height: 200px;
+      object-fit: cover;
+      background-color: rgb(202, 200, 200);
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .main-select-drama h3 {
+      font-size: 18px;
+      margin: 8px 0 0 0;
+      font-weight: bold;
+    }
+
+    .main-select-drama p {
+      font-size: 14px;
+      margin: 4px 0 10px;
+    }
+
+    .main-select-drama button {
+      padding: 6px 12px;
+      font-size: 13px;
+      border: 1px solid #666;
+      background-color: white;
+      border-radius: 16px;
+      cursor: pointer;
+    }
+
+    .other-drama-part {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-areas:
+        "big big small1"
+        "small2 wide wide";
+      gap: 20px;
+      padding: 40px 5%;
+      position: relative;
+      overflow: hidden;
+      width: 1000px;
+      margin: 0 auto;
+    }
+
+    .bottom-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.8);
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 20px;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .bottom-arrow.left {
+      left: 10px;
+    }
+
+    .bottom-arrow.right {
+      right: 10px;
+    }
+
+    .bottom-arrow:hover {
+      background: rgba(255, 255, 255, 0.95);
+    }
+
+    .drama-box {
+      width: 100%;
+      height: 250px;
+      background-size: cover;
+      background-position: center;
+      border-radius: 10px;
+      position: relative;
+      overflow: hidden;
+      color: rgb(24, 7, 7);
+      font-family: 'Noto Sans KR', sans-serif;
+      transition: transform 0.3s ease;
+    }
+
+    .overlay {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      padding: 15px;
+    }
+
+    .other-drama1 {
+      grid-area: big;
+    }
+
+    .other-drama2 {
+      grid-area: small1;
+    }
+
+    .other-drama3 {
+      grid-area: small2;
+    }
+
+    .other-drama4 {
+      grid-area: wide;
+    }
+
+    .view-toggle {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      margin-bottom: 10px;
+      width: 1000px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .view-toggle button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .view-toggle img {
+      width: 24px;
+      height: 24px;
+    }
+
+    .grid-view-btn {
+      width: 26px;
+      height: 40px;
+      padding: 0;
+      border: none;
+      background: none;
+    }
+
+    .list-view-btn {
+      width: 33px;
+      height: 40px;
+    }
+
+    .grid-view-btn img,
+    .list-view-btn img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .select-drama-part.grid-layout {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      padding: 30px 40px;
+      width: fit-content;
+      margin: 0 auto;
+    }
+
+    .main-select-drama.grid-layout {
+      display: flex;
+      flex-direction: row;
+      gap: 30px;
+      align-items: flex-start;
+      justify-content: flex-start;
+      width: 1000px;
+      padding-left: 0;
+      margin: 0 auto 0 160px;
+
+    }
+
+    .main-select-drama.grid-layout img {
+      width: 250px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      flex-shrink: 0;
+    }
+
+    .main-select-drama-text {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+      flex: 1;
+      height: 150px;
+      justify-content: space-between;
+    }
+
+    .main-select-drama-text h3 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .main-select-drama-text p {
+      font-size: 14px;
+      margin: 10px 0;
+      flex: 1;
+    }
+
+    .main-select-drama-text button {
+      padding: 6px 12px;
+      font-size: 13px;
+      border: 1px solid #666;
+      background-color: white;
+      border-radius: 16px;
+      cursor: pointer;
+      margin-top: auto;
+      align-self: flex-;
+    }
+
+    .thumbnail-slider-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 10px;
+      max-width: 800px;
+      margin: 20px auto;
+      position: relative;
+    }
+
+    .select-drama.grid-layout {
+      display: flex;
+      flex-direction: row;
+      gap: 18px;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      padding: 0 20px;
+      width: 100%;
+    }
+
+    .model {
+      width: 490px;
+      height: auto;
+      margin: 60px auto;
+      padding: 80px 15px 100px 15px;
+      border-radius: 30px;
+      background-color: rgb(250, 231, 148);
+      box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.1);
+      position: relative;
+      display: flex;
+      gap: 20px;
+      flex-direction: row;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 28px;
+      border: none;
+      background: none;
+      cursor: pointer;
+    }
+
+    .main-image {
+      width: 120px;
+      height: 180px;
+      background-color: #70706f;
+      border-radius: 10px;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .title {
+      flex: 1;
+    }
+
+    .title h3 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .watch-want {
+      margin: 5px 0;
+      color: #525252;
+      font-size: 13px;
+    }
+    
+    .ott-icon {
+      width: 25px;
+      height: 25px;
+      border-radius: 4px;
+      object-fit: cover;
+    }
+
+    .watch-moving {
+      width: auto;
+      height: 25px;
+      background-color: transparent;
+      border-radius: 0;
+      margin: 9px 0;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .title hr {
+      border: none;
+      height: 1px;
+      background-color: #706f6f;
+      margin: 10px 0;
+    }
+
+    .description {
+      font-size: 12px;
+      line-height: 1.6;
+      color: #252525;
+    }
+
+    .naver-btn {
+      cursor: pointer;
+      margin-top: 30px;
+      margin-left: 50px;
+      padding: 5px 13px;
+      border: 1px solid #ccc;
+      background-color: rgb(252, 251, 228);
+      border-radius: 999px;
+      font-size: 12px;
+    }
+
+    #modalContainer {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    #modalContainer.show {
+      display: flex !important;
+    }
+
+    .select-drama.grid-layout article {
+      border: 4px solid transparent;
+      border-radius: 8px;
+      transition: border-color 0.3s ease;
+      cursor: pointer;
+    }
+
+    .select-drama.grid-layout article:hover {
+      border-color: #FDD835;
+    }
+
+    .select-drama.grid-layout article.active {
+      border-color: #FDD835;
+    }
+
+    .select-drama.grid-layout article img {
+      border-radius: 6px;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav class="menu">
+      <a href="index.html"><img id="logo" src="img/logo_white.jpg"></a>
+      <div class="menu-list">
+        <a href="romance.html">드라마</a>
+        <a href="admin_recommend.html">주인장 추천</a>
+        <a href="introduce.html">조원소개</a>
+        <a href="notice.html">공지사항</a>
+        <a href="come_route.html">찾아오는 길</a>
+      </div>
+    </nav>
+  </header>
+
+  <section class="genre-banner">
+    <div class="genre-banner-box">
+      <img id="banner"
+        src="https://blog.kakaocdn.net/dn/bqdDBD/btq3GD9xeD3/JLxmoFkvSuBHIKa9Ef4bxk/img.png"
+        alt="장르 배너 이미지">
+      <div class="genre-banner-text">
+        <h1 style="color: #FFF;">로맨스</h1>
+        <p style="color: #FFF;">다시 누군가를 좋아하고 싶게 만드는 드라마</p>
+      </div>
+    </div>
+  </section>
+
+  <main>
+    <section class="intro">
+      <a class="nav-arrow left" style="color: inherit;" href="action.html">
+        <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="none" viewBox="0 0 24 24" stroke="black">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+      </a>
+
+        <div class="intro-text">
+          <h2>로맨스</h2>
+          <p>설레는 그 순간을 기억할 수 있게, 당신의 로맨스를 찾아보세요</p>
+        </div>
+
+      <a class="nav-arrow right" style="color: inherit;" href="thriller.html">
+          <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="none" viewBox="0 0 24 24" stroke="black">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </a>
+    </section>
+
+    <div class="line1">
+      <hr>
+    </div>
+
+    <div class="view-toggle">
+      <button class="grid-view-btn" onclick="switchLayout('grid')">
+        <svg width="24" height="24" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <rect x="10" y="10" width="35" height="35" fill="#444444" />
+          <rect x="55" y="10" width="35" height="35" fill="#444444" />
+          <rect x="10" y="55" width="35" height="35" fill="#444444" />
+          <rect x="55" y="55" width="35" height="35" fill="#444444" />
+        </svg>
+      </button>
+      <button class="list-view-btn" onclick="switchLayout('list')">
+        <svg width="24" height="20" viewBox="0 0 120 100" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="10" cy="15" r="5" fill="#444444" />
+          <rect x="25" y="10" width="85" height="10" rx="2" fill="#444444" />
+          <circle cx="10" cy="35" r="5" fill="#444444" />
+          <rect x="25" y="30" width="85" height="10" rx="2" fill="#444444" />
+          <circle cx="10" cy="55" r="5" fill="#444444" />
+          <rect x="25" y="50" width="85" height="10" rx="2" fill="#444444" />
+          <circle cx="10" cy="75" r="5" fill="#444444" />
+          <rect x="25" y="70" width="85" height="10" rx="2" fill="#444444" />
+        </svg>
+      </button>
+    </div>
+
+    <div id="listLayout" class="drama-layout">
+      <section class="select-drama-part">
+        <div class="arrow-up"></div>
+        <div class="select-drama">
+        </div>
+        <div class="arrow-down"></div>
+
+        <div class="main-select-drama">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHW8JhEBVlhgXHdZ-hvI-sPZswwFmknvNKdQ&s"
+            alt="대표 드라마 이미지">
+          <h3>선택한 드라마 제목</h3>
+          <p>간단한 줄거리</p>
+          <button class="info-button">자세히 보기</button>
+        </div>
+      </section>
+
+      <div class="line2">
+        <hr>
+      </div>
+
+      <section class="other-drama-part">
+        <div class="other-drama1 drama-box"
+          style="background-image: url('https://blog.kakaocdn.net/dn/bqdDBD/btq3GD9xeD3/JLxmoFkvSuBHIKa9Ef4bxk/img.png');">
+          <div class="overlay">
+            <h4 style="color: #FFF;">로맨스</h4>
+            <p style="color: #FFF;">감정을 깨우는 이야기</p>
+          </div>
+        </div>
+
+        <div class="other-drama2 drama-box"
+          style="background-image: url('https://media.istockphoto.com/id/1248659651/ko/%EC%82%AC%EC%A7%84/%EB%B9%A8%EA%B0%84-%EB%B6%88%EB%B9%9B%EC%9C%BC%EB%A1%9C-%EA%B0%80%EB%93%9D-%EC%B0%AC-%EB%B0%A9%EC%97%90%EC%84%9C-%EC%B0%BD%EB%AC%B8%EC%97%90-%EC%86%90%EC%9D%84-%EB%8C%80%EA%B3%A0-%EC%9E%88%EB%8A%94-%EC%82%AC%EB%9E%8C%EC%9D%98-%EC%84%AC%EB%9C%A9%ED%95%9C-%EC%82%AC%EC%A7%84.jpg?s=612x612&w=0&k=20&c=COdNnJbHSSaRhzSJoLON18o9zVhoMDf3zp_HtRJwqAs=');">
+          <div class="overlay">
+            <h4 style="color: #FFF;">스릴러</h4>
+            <p style="color: #FFF;">긴장감이 멈추지 않는 전개</p>
+          </div>
+        </div>
+
+        <div class="other-drama3 drama-box"
+          style="background-image: url('https://i.pinimg.com/originals/90/4d/5f/904d5f8470285ad8061d5ab386900b96.jpg');">
+          <div class="overlay">
+            <h4 style="color: #FFF;">판타지</h4>
+            <p style="color: #FFF;">현실을 뛰어넘는 상상의 세계</p>
+          </div>
+        </div>
+
+        <div class="other-drama4 drama-box"
+          style="background-image: url('https://wimg.heraldcorp.com/content/default/2016/09/25/20160925000033_0.jpg');">
+          <div class="overlay">
+            <h4 style="color: #FFF;">법정</h4>
+            <p style="color: #FFF;">정의와 진실을 향한 치열한 싸움</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div id="gridLayout" class="drama-layout" style="display: none;">
+      <section class="select-drama-part grid-layout">
+        <div class="main-select-drama grid-layout">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHW8JhEBVlhgXHdZ-hvI-sPZswwFmknvNKdQ&s"
+            alt="대표 드라마 이미지">
+          <div class="main-select-drama-text">
+            <h3>선택한 드라마 제목</h3>
+            <p>간단한 줄거리</p>
+            <button class="info-button">자세히 보기</button>
+          </div>
+        </div>
+
+        <div class="thumbnail-slider-wrapper">
+          <div class="select-drama grid-layout">
+          </div>
+        </div>
+      </section>
+
+      <div class="line2">
+        <hr>
+      </div>
+
+      <section class="other-drama-part">
+        <div class="other-drama1 drama-box"
+          style="background-image: url('https://blog.kakaocdn.net/dn/bqdDBD/btq3GD9xeD3/JLxmoFkvSuBHIKa9Ef4bxk/img.png');">
+          <div class="overlay">
+            <h4 style="color: #FFF;">로맨스</h4>
+            <p style="color: #FFF;">감정을 깨우는 이야기</p>
+          </div>
+        </div>
+
+        <div class="other-drama2 drama-box"
+          style="background-image: url('https://media.istockphoto.com/id/1248659651/ko/%EC%82%AC%EC%A7%84/%EB%B9%A8%EA%B0%84-%EB%B6%88%EB%B9%9B%EC%9C%BC%EB%A1%9C-%EA%B0%80%EB%93%9D-%EC%B0%AC-%EB%B0%A9%EC%97%90%EC%84%9C-%EC%B0%BD%EB%AC%B8%EC%97%90-%EC%86%90%EC%9D%84-%EB%8C%80%EA%B3%A0-%EC%9E%88%EB%8A%94-%EC%82%AC%EB%9E%8C%EC%9D%98-%EC%84%AC%EB%9C%A9%ED%95%9C-%EC%82%AC%EC%A7%84.jpg?s=612x612&w=0&k=20&c=COdNnJbHSSaRhzSJoLON18o9zVhoMDf3zp_HtRJwqAs=');">
+          <div class="overlay">
+            <h4 style="color: #FFF;">스릴러</h4>
+            <p style="color: #FFF;">긴장감이 멈추지 않는 전개</p>
+          </div>
+        </div>
+
+        <div class="other-drama3 drama-box"
+          style="background-image: url('https://i.pinimg.com/originals/90/4d/5f/904d5f8470285ad8061d5ab386900b96.jpg');">
+          <div class="overlay">
+            <h4 style="color: #FFF;">판타지</h4>
+            <p style="color: #FFF;">현실을 뛰어넘는 상상의 세계</p>
+          </div>
+        </div>
+
+        <div class="other-drama4 drama-box"
+          style="background-image: url('https://wimg.heraldcorp.com/content/default/2016/09/25/20160925000033_0.jpg');">
+          <div class="overlay">
+            <h4 style="color: #FFF;">법정</h4>
+            <p style="color: #FFF;">정의와 진실을 향한 치열한 싸움</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <p>서비스 이용약관 | 개인정보 처리방침 | 연락 정보</p>
+      <p>고객센터 | (02)300-1000,1114 FAX (02)304-4832</p>
+      <p>콜고 문의 | (02)300-1000,1114 FAX (02)304-4832</p>
+      <p>제휴 및 대외 협력 | https://www.mjc.ac.kr/mjcindex.do | 사업장 | 우)03656 서울특별시 서대문구 거북로 134(남가좌동) 서대문구 홍은 2동 356-1)</p>
+    </div>
+  </footer>
+
+  <div id="modalContainer">
+    <div class="model">
+      <button class="close-btn">×</button>
+      <div class="main-image"></div>
+      <div class="title">
+        <h3>제목</h3>
+        <p class="watch-want">감상 가능한 곳</p>
+        <div class="watch-moving">
+          <img src="https://www.tving.com/favicon.ico" alt="Tving" class="ott-icon">
+          <img src="https://www.wavve.com/favicon.ico" alt="Wavve" class="ott-icon">
+          <img src="https://yt3.googleusercontent.com/A_FS30pNKvIuf79LJSRUzPRaDGOsKUmWw9lWYBSY6v2RyalL2hSjtgv4IV2R39CEOreM8A2Vcw=s900-c-k-c0x00ffffff-no-rj" 
+          alt="netflix" class="ott-icon">
+        </div>
+        <hr>
+        <p class="description">
+          남다른 두뇌를 지녔지만 늘 홀로였던 모범생 연시는.<br>
+          어느 날부터 학교에 만연한 폭력으로 인해 그의 조용한 나날이 깨지고,<br>
+          예기치 않게 만나게 된 친구들과 함께 맞서 싸우며 성장해 간다.
+        </p>
+        <button class="naver-btn">정보 보러가기 →</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function switchVersion(version) {
+      window.location.href = version + '.html';
+    }
+
+    const dramas = [
+      {
+        title: "선재 업고 튀어",
+        quote: "시간을 건너 너에게 갈게.",
+        description: "어느 날 갑자기, 나의 최애 류선재가 죽었다. 류선재를 살리기 위해 과거로 돌아간 열성팬 임솔의 이야기.",
+        image: "https://image.tving.com/ntgs/contents/CTC/caip/CAIP0400/ko/20240315/0735/P001754312.jpg/dims/resize/1280",
+        modalImage: "https://i.namu.wiki/i/BdcGP3l5vgSdJvgmyBut4hpStsJ0YARTe8MUpGQLuYlIoK7h0EcrAfnmBfC_61lID3RtlSP7I7dJBp32CoR_TpKNpxbSUz-Vsf0UJnbWy6BPxM097RqO4KwcmlKDkFXQ8pC7zyaVXsQgkr7PWRP32w.webp",
+        watchLink: "https://www.tving.com/contents/P001754312"
+      },
+      {
+        title: "눈물의 여왕",
+        quote: "사랑은 기적을 만든다.",
+        description: "재벌 3세 홍해인과 용두리 이장 아들 백현우의 아찔한 부부싸움과 기적처럼 다시 시작되는 사랑 이야기.",
+        image: "https://image.tving.com/ntgs/contents/CTC/caip/CAIP0400/ko/20240503/1010/P001756355.jpg/dims/resize/1280",
+        modalImage: "https://i.namu.wiki/i/YuAsU26BCgYKrGpZRntwxO_e7teSN0FiezyyDjgJzyX7QJ2AQ0Uy5wFtuHbgghP7fXecVaCqHlj5MruR9ne0Wnod3xx8BVEY3RGm5K4FAKVB50XMVkdCjDvLhdBMNkWFx63Ujizxi7ypZ60C-Sy2uQ.webp",
+        watchLink: "https://www.tving.com/contents/P001753352"
+      },
+      {
+        title: "사랑의 불시착",
+        quote: "어떤 순간, 어떤 일이 있어도 사랑은 온다.",
+        description: "어느 날 돌풍과 함께 패러글라이딩 사고로 북한에 불시착한 재벌 상속녀 윤세리와 그녀를 숨기고 지키다 사랑하게 되는 북한 장교 리정혁의 이야기.",
+        image: "https://poc-cf-image.cjenm.com/public/share/menumng/1675755583288599170603.jpg",
+        modalImage: "다른이미지URL",
+        watchLink: "https://www.google.com/url?sa=i&url=https%3A%2F%2Ftvn.cjenm.com%2Fko%2Fcloy%2F&psig=AOvVaw3K8vSVdB9cTViTvFrOWMVw&ust=1749443639648000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCIDj58r_4I0DFQAAAAAdAAAAABAE"
+      },
+      {
+        title: "그 해 우리는",
+        quote: "모든 시간을 너와 함께.",
+        description: "함께해서 더러웠고 다신 보지 말자!로 끝났어야 할 인연이 10년 뒤 강제로 소환되면서 펼쳐지는 청춘들의 성장통을 그린 드라마.",
+        image: "https://img2.sbs.co.kr/img/sbs_cms/WE/2022/02/07/NxE1644218336386.jpg",
+        modalImage: "https://i.namu.wiki/i/iahbohBjf8BBTtDOGaRS6uEHw2Id3BwHBWk10jt0JkVTo1nYUEch1E8w8GyrJcaN_YmvOGU9TAUHQZZXeyiDyYk7eyyWYgA-DxQP_RhEjMg1-9Yl6Tz50pge-RwnLkuqfInRvO4YzYh3FPqlzsx1Ug.webp",
+        watchLink: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fprograms.sbs.co.kr%2Fdrama%2Fourbelovedsummer%2Fmain&psig=AOvVaw1RaIUkPyFQ85HaQsdc9knQ&ust=1749443783612000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCNizuo6A4Y0DFQAAAAAdAAAAABAE"
+      },
+      {
+        title: "이번 생은 처음이라",
+        quote: "인생은 예측불허의 연속이다.",
+        description: "집 있는 달팽이가 세상 제일 부러운 '홈리스' 윤지호와 현관만 내 집인 '하우스푸어' 집주인 남세희가 한 집에 살면서 펼쳐지는 수지타산 로맨스.",
+        image: "https://poc-cf-image.cjenm.com/public/share/menumng/1675755583387099172573.jpg",
+        modalImage: "https://i.namu.wiki/i/5_OioF4TvKGmi0c5rSU6dKpqqHqB0N1qv70JQf4w7aYzL0uuFqwcKiz5JrLEDR0PfVMnp6iBRAM9Ns0L5cjYYVQDPkos3aodKmOqkMw55f_9ovIi5_fTb9nXZYg9NilSzgbWUaowZhM5kvrxFZnDNQ.webp",
+        watchLink: "https://www.google.com/url?sa=i&url=https%3A%2F%2Ftvn.cjenm.com%2Fko%2Ftvnfirstlife%2F&psig=AOvVaw1KRJVx8DGSQzqq04qhm8d7&ust=1749443839604000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCODTlamA4Y0DFQAAAAAdAAAAABAE"
+      },
+      {
+        title: "나의 해방일지",
+        quote: "아무것도 아닌 나를 채워줘.",
+        description: "견딜 수 없이 촌스러운 삼 남매의 견딜 수 없이 사랑스러운 행복소생기.",
+        image: "https://image.tving.com/ntgs/contents/CTC/caip/CAIP1500/ko/20220402/P001584190.jpg/dims/resize/1280",
+        modalImage: "https://i.namu.wiki/i/s2uLaRB66XvYjYNaq1eEO2wP2CBG1uBHOM60_G7PRIbGbh4OVZq-hPasm7u3DaF-u9iUXG8HQFLIsgX1WowEZrK7cSYP3LdaLjHAWsDQffDtkbHHewW7goxwrFjXJbxIfDzZSCiVvLJ7cuqyOkYj1Q.webp",
+        watchLink: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.tving.com%2Fcontents%2FE003715339&psig=AOvVaw23G1hVM2gywRvXlD-eiKgC&ust=1749443880720000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCICT4cSA4Y0DFQAAAAAdAAAAABAE"
+      },
+      {
+        title: "뷰티 인사이드",
+        quote: "매일 얼굴이 바뀌는 여자와 그녀를 사랑하는 남자.",
+        description: "한 달에 일주일 타인의 얼굴로 살아가는 여자와 일 년 내내 타인의 얼굴을 알아보지 못하는 남자의 조금은 특별한 로맨스 드라마.",
+        image: "https://fs.jtbc.co.kr/prog/drama/beautyinside/Img/site/Main/20181121_092319_4906(0).jpg",
+        modalImage: "https://i.namu.wiki/i/OuQWZ3sI2Jb4TR47uz6pokxOiictbVp9vMqrH7yaMrjqgj5sqBpSN1OBJbhnv6xMGCLMOyzyU5EI7h0g9k9W542H1Qc5jEYuU1woFhtacVyPs95dqtwcnebZH0KiTG9OeFIkAfI2BqmGsj_4veiWqw.webp",
+        watchLink: "https://www.google.com/url?sa=i&url=https%3A%2F%2Ftv.jtbc.co.kr%2Fbeautyinside&psig=AOvVaw02HpB3_uVnXhRgO_913epj&ust=1749443950634000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCOiM8dyA4Y0DFQAAAAAdAAAAABAE"
+      }
+    ];
+
+    let currentDramaIndex = 0;
+    const visibleThumbnails = 6;
+    const cloneCount = Math.floor(visibleThumbnails / 2);
+    let isScrolling = false;
+    let currentListViewStartIndex = 0;
+    const dramasPerListView = 3;
+
+     function updateMainDrama(index) {
+      const drama = dramas[index];
+
+      const gridImg = document.querySelector('.main-select-drama.grid-layout img');
+      const gridTitle = document.querySelector('.main-select-drama.grid-layout h3');
+      const gridDesc = document.querySelector('.main-select-drama.grid-layout p');
+      const gridButton = document.querySelector('.main-select-drama-text .info-button');
+
+      if (gridImg) gridImg.src = drama.image;
+      if (gridTitle) gridTitle.textContent = drama.title;
+      if (gridDesc) gridDesc.textContent = drama.description;
+      if (gridButton) {
+        gridButton.onclick = (e) => {
+          e.preventDefault();
+          showModal();
+        };
+      }
+
+      const listImg = document.querySelector('#listLayout .main-select-drama img');
+      const listTitle = document.querySelector('#listLayout .main-select-drama h3');
+      const listDesc = document.querySelector('#listLayout .main-select-drama p');
+      const listButton = document.querySelector('#listLayout .main-select-drama .info-button');
+
+      if (listImg) listImg.src = drama.image;
+      if (listTitle) listTitle.textContent = drama.title;
+      if (listDesc) listDesc.textContent = drama.description;
+      if (listButton) {
+        listButton.onclick = (e) => {
+          e.preventDefault();
+          showModal();
+        };
+      }
+
+      // 모달 업데이트
+      document.querySelector('.model .main-image').style.backgroundImage = `url(${drama.modalImage})`;
+      document.querySelector('.model .title h3').textContent = drama.title;
+      document.querySelector('.model .description').textContent = drama.description;
+      document.querySelector('.model .naver-btn').onclick = () => window.open(drama.watchLink, '_blank');
+    }
+
+    function populateThumbnails() {
+      const thumbnailList = document.querySelector('.select-drama.grid-layout');
+      if (!thumbnailList) return;
+      thumbnailList.innerHTML = '';
+
+      dramas.forEach((drama, index) => {
+        const article = document.createElement('article');
+        const img = document.createElement('img');
+        img.src = drama.image;
+        img.alt = drama.title;
+        article.appendChild(img);
+        if (index === currentDramaIndex) {
+          article.classList.add('active');
+        }
+
+        article.onclick = () => {
+          thumbnailList.querySelectorAll('article').forEach(art => art.classList.remove('active'));
+          article.classList.add('active');
+
+          currentDramaIndex = index;
+          updateMainDrama(currentDramaIndex);
+        };
+        thumbnailList.appendChild(article);
+      });
+    }
+
+    function populateListViewDramas() {
+      const listViewDramaContainer = document.querySelector('#listLayout .select-drama');
+      if (!listViewDramaContainer) return;
+      listViewDramaContainer.innerHTML = '';
+
+      for (let i = 0; i < dramasPerListView; i++) {
+        const dramaIndex = (currentListViewStartIndex + i + dramas.length) % dramas.length;
+        const drama = dramas[dramaIndex];
+
+        const article = document.createElement('article');
+        const img = document.createElement('img');
+        img.src = drama.image;
+        img.alt = drama.title;
+        article.appendChild(img);
+
+        const p = document.createElement('p');
+        p.innerHTML = `<span class="drama-title">${drama.title}</span><br><span class="drama-description">${drama.quote}</span>`;
+        article.appendChild(p);
+
+        // 현재 선택된 드라마면 active 클래스 추가
+        if (dramaIndex === currentListViewStartIndex) {
+          article.classList.add('active');
+        }
+
+        article.onclick = () => {
+          // 모든 article에서 active 클래스 제거
+          listViewDramaContainer.querySelectorAll('article').forEach(art => art.classList.remove('active'));
+          // 클릭된 article에 active 클래스 추가
+          article.classList.add('active');
+
+          updateMainDrama(dramaIndex);
+        };
+        listViewDramaContainer.appendChild(article);
+      }
+      updateMainDrama(currentListViewStartIndex);
+    }
+
+    // 하단 리스트 무한 슬라이더 설정
+    function setupBottomListSlider() {
+      const bottomList = document.querySelector('.other-drama-part');
+      if (!bottomList) return;
+
+      // 리스트 뷰에서는 화살표 버튼 생성/추가하지 않음
+      const isGridView = document.getElementById('gridLayout').style.display !== 'none';
+      if (!isGridView) return;
+
+      let currentPosition = 0;
+      const items = Array.from(bottomList.querySelectorAll('.drama-box'));
+      const totalItems = items.length;
+      const visibleItems = 6; // 한 번에 보이는 아이템 수
+
+      // 아이템이 6개 이하면 화살표 숨김
+      if (totalItems <= visibleItems) {
+        document.querySelectorAll('.bottom-arrow.left, .bottom-arrow.right').forEach(btn => btn.style.display = 'none');
+        items.forEach((item, idx) => {
+          item.style.transform = `translateX(${idx * 100}%)`;
+          item.style.opacity = "1";
+          item.style.pointerEvents = "auto";
+        });
+        return;
+      }
+
+      // 화살표 생성
+      function ensureArrows() {
+        if (!bottomList.parentElement.querySelector('.bottom-arrow.left')) {
+          const leftBtn = document.createElement('button');
+          leftBtn.className = 'bottom-arrow left';
+          leftBtn.innerHTML = '&#10094;';
+          leftBtn.onclick = () => moveSlider('left');
+          bottomList.parentElement.insertBefore(leftBtn, bottomList);
+        }
+        if (!bottomList.parentElement.querySelector('.bottom-arrow.right')) {
+          const rightBtn = document.createElement('button');
+          rightBtn.className = 'bottom-arrow right';
+          rightBtn.innerHTML = '&#10095;';
+          rightBtn.onclick = () => moveSlider('right');
+          bottomList.parentElement.appendChild(rightBtn);
+        }
+        document.querySelectorAll('.bottom-arrow.left, .bottom-arrow.right').forEach(btn => btn.style.display = '');
+      }
+      ensureArrows();
+
+      // 실제 이동 함수
+      function moveSlider(direction) {
+        if (direction === 'left') {
+          currentPosition = (currentPosition - 1 + totalItems) % totalItems;
+        } else {
+          currentPosition = (currentPosition + 1) % totalItems;
+        }
+        // 무한 슬라이드: 6개씩 보이면서 한 칸씩 이동
+        items.forEach((item, idx) => {
+          let pos = (idx - currentPosition + totalItems) % totalItems;
+          if (pos < visibleItems) {
+            item.style.transform = `translateX(${pos * 100}%)`;
+            item.style.opacity = "1";
+            item.style.pointerEvents = "auto";
+          } else {
+            item.style.transform = `translateX(${visibleItems * 100}%)`;
+            item.style.opacity = "0";
+            item.style.pointerEvents = "none";
+          }
+        });
+      }
+
+      // 초기 위치 설정
+      items.forEach((item, idx) => {
+        item.style.transition = 'transform 0.3s, opacity 0.3s';
+      });
+      moveSlider('right');
+    }
+
+    function removeBottomListArrows() {
+      document.querySelectorAll('.bottom-arrow.left, .bottom-arrow.right').forEach(btn => btn.remove());
+
+      const dramaBoxes = document.querySelectorAll('.other-drama-part .drama-box');
+      dramaBoxes.forEach((item) => {
+        item.style.removeProperty('transform');
+        item.style.removeProperty('opacity');
+        item.style.removeProperty('pointer-events');
+        item.style.removeProperty('transition');
+      });
+    }
+
+    function switchLayout(layout) {
+      let listLayout = document.getElementById('listLayout');
+      let gridLayout = document.getElementById('gridLayout');
+
+      if (layout === 'list') {
+        if (listLayout) { listLayout.style.display = 'block'; }
+        if (gridLayout) { gridLayout.style.display = 'none'; }
+        currentListViewStartIndex = 0;
+        populateListViewDramas();
+        updateMainDrama(currentListViewStartIndex);
+        removeBottomListArrows(); // 이미 수정된 함수가 스타일도 초기화함
+      } else if (layout === 'grid') {
+        if (listLayout) { listLayout.style.display = 'none'; }
+        if (gridLayout) { gridLayout.style.display = 'block'; }
+        populateThumbnails();
+        updateMainDrama(currentDramaIndex);
+        setupBottomListSlider(); // 그리드뷰에서만 화살표 생성
+        const thumbnailList = document.querySelector('.select-drama.grid-layout');
+        const firstRealThumbnail = thumbnailList.children[cloneCount];
+        if (firstRealThumbnail) {
+          thumbnailList.scrollLeft = firstRealThumbnail.offsetLeft;
+        }
+      }
+    }
+
+    function showModal() {
+      let modal = document.getElementById('modalContainer');
+      if (modal) {
+        modal.classList.add('show');
+      }
+    }
+
+    function hideModal() {
+      let modal = document.getElementById('modalContainer');
+      if (modal) {
+        modal.classList.remove('show');
+      }
+    }
+
+    window.onload = function () {
+      let modal = document.getElementById('modalContainer');
+      let closeButton = document.querySelector('.close-btn');
+      let gridViewBtn = document.querySelector('.grid-view-btn');
+      let listViewBtn = document.querySelector('.list-view-btn');
+      let infoButtons = document.querySelectorAll('.info-button');
+      let thumbnailList = document.querySelector('.select-drama.grid-layout');
+      let listViewArrowUp = document.querySelector('#listLayout .arrow-up');
+      let listViewArrowDown = document.querySelector('#listLayout .arrow-down');
+
+      if (gridViewBtn) {
+        gridViewBtn.onclick = function () {
+          switchLayout('grid');
+        };
+      }
+
+      if (listViewBtn) {
+        listViewBtn.onclick = function () {
+          switchLayout('list');
+        };
+      }
+
+      if (listViewArrowUp) {
+        listViewArrowUp.addEventListener('click', () => {
+          currentListViewStartIndex = (currentListViewStartIndex - 1 + dramas.length) % dramas.length;
+          populateListViewDramas();
+        });
+      }
+
+      if (listViewArrowDown) {
+        listViewArrowDown.addEventListener('click', () => {
+          currentListViewStartIndex = (currentListViewStartIndex + 1) % dramas.length;
+          populateListViewDramas();
+        });
+      }
+
+      if (infoButtons) {
+        infoButtons.forEach(function (button) {
+          button.onclick = function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            showModal();
+          };
+        });
+      }
+
+      if (closeButton) {
+        closeButton.onclick = function (e) {
+          e.preventDefault();
+          hideModal();
+        };
+      }
+
+      if (modal) {
+        modal.onclick = function (e) {
+          if (e.target === modal) {
+            hideModal();
+          }
+        };
+      }
+
+      switchLayout('grid');
+    };
+  </script>
+</body>
+
+</html>

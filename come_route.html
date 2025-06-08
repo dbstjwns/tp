@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>DramaPick</title>
+  <link rel="stylesheet" href="setting_modal.css">
+  <script src="setting_modal.js"></script>
+  <style>
+    /* 네이게이션 바 CSS */
+    #logo {
+      width: 150px;
+      margin-bottom: 10px;
+    }
+
+    header {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 0 40px 0;
+    }
+
+    nav.menu {
+      width: 100%;
+      margin: 0 0 48px 0;
+      background: none;
+      border: none;
+      box-shadow: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      position: relative;
+    }
+
+    nav.menu::after {
+      content: "";
+      display: block;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: -1px;
+      width: 100vw;
+      height: 1.5px;
+      background: #e0e0e0;
+      z-index: 1;
+    }
+
+    .menu-list {
+      display: flex;
+      gap: 60px;
+      align-items: center;
+      height: 64px;
+      padding: 0 48px;
+      min-width: 700px;
+      max-width: 1000px;
+      width: 100%;
+      background: none;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    .menu-list a {
+      color: #444;
+      text-decoration: none;
+      font-size: 1.15rem;
+      padding-bottom: 4px;
+      transition: color 0.2s;
+      display: inline-block;
+    }
+
+    .menu-list a.active {
+      color: #222;
+      font-weight: 700;
+      border-bottom: 4px solid #FDD835;
+    }
+
+    .menu-list a:hover {
+      color: #222;
+      font-weight: 700;
+      border-bottom: 4px solid #FDD835;
+    }
+
+    /* footer CSS */
+    .footer {
+      background-color: #f0f0f0;
+      padding: 20px;
+      font-size: 12px;
+      color: #666;
+      margin-top: 50px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .footer-content {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 0 20px;
+      box-sizing: border-box;
+    }
+
+    .footer p {
+      margin: 5px 0;
+      line-height: 1.4;
+    }
+
+    /* 반응형 푸터 스타일 */
+    @media (max-width: 600px) {
+      .footer {
+        padding: 15px;
+        font-size: 11px;
+        margin-top: 40px;
+      }
+
+      .footer-content {
+        max-width: 95vw;
+        padding: 0 10px;
+      }
+
+      .footer p {
+        margin: 4px 0;
+      }
+    }
+
+    /* 지도 박스 */
+    .map-box {
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.10);
+      margin: 0 auto 32px auto;
+      max-width: 1100px;
+      max-height: 600px;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-sizing: border-box;
+    }
+
+    .map-img {
+      width: 100%;
+      max-width: 1100px;
+      max-height: 500px;
+      border-radius: 18px;
+      display: block;
+    }
+
+    /* 주소 박스 */
+    .address-box {
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.10);
+      margin: 0 auto 32px auto;
+      max-width: 1100px;
+      min-width: 600px;
+      padding: 32px 32px 24px 32px;
+      font-size: 1.13rem;
+      line-height: 1.8;
+      box-sizing: border-box;
+    }
+
+    .address-box strong {
+      font-size: 1.08rem;
+      font-weight: 600;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    @media (max-width: 1000px) {
+
+      .map-box,
+      .address-box {
+        max-width: 98vw;
+      }
+
+      .menu-list {
+        min-width: 0;
+        max-width: 100vw;
+        padding: 0 8px;
+        gap: 24px;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .map-img {
+        max-width: 100%;
+      }
+
+      .map-box,
+      .address-box {
+        padding: 0 2vw;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav class="menu">
+      <a href="index.html"><img id="logo" src="img/logo_white.jpg"></a>
+      <div class="menu-list">
+        <a href="romance.html">드라마</a>
+        <a href="admin_recommend.html">주인장 추천</a>
+        <a href="introduce.html">조원소개</a>
+        <a href="notice.html">공지사항</a>
+        <a href="#" class="active">찾아오는 길</a>
+      </div>
+    </nav>
+  </header>
+  <div class="map-box">
+    <img src="img/gil.jpg" alt="명지전문대학 위치 지도" class="map-img">
+  </div>
+  <div class="address-box">
+    <strong>주소</strong>
+    도로명 | 서울 서대문구 가좌로 134 명지전문대학<br>
+    지번 | 서울 서대문구 홍은동 356-1<br>
+    우편번호 | 03656
+  </div>
+  <footer class="footer">
+    <div class="footer-content">
+      <p>서비스 이용약관 | 개인정보 처리방침 | 연락 정보</p>
+      <p>고객센터 | (02)300-1000,1114 FAX (02)304-4832</p>
+      <p>콜고 문의 | (02)300-1000,1114 FAX (02)304-4832</p>
+      <p>제휴 및 대외 협력 | https://www.mjc.ac.kr/mjcindex.do | 사업장 | 우)03656 서울특별시 서대문구 거북로 134(남가좌동) 서대문구 홍은 2동 356-1)</p>
+    </div>
+  </footer>
+</body>
+
+</html>
